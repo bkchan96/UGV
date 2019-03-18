@@ -23,9 +23,22 @@
 module gray_decoder(in, out);
     input [7:0] in;
     output reg [7:0] out;
+
+    // reverse bit order for input
+    wire [7:0] in_reverse;
+    assign in_reverse = {
+        in[0],
+        in[1],
+        in[2],
+        in[3],
+        in[4],
+        in[5],
+        in[6],
+        in[7]};
     
+    // create ROM block
     always @* begin
-        case (in)
+        case (in_reverse)
             8'b01111111: out = 0  ; // 127
             8'b00111111: out = 1  ; // 63
             8'b00111110: out = 2  ; // 62
