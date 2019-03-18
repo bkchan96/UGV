@@ -2,14 +2,14 @@
 
 module displayController(clk, in0, in1, in2, in3, in4, in5, in6, in7, out, outan);
     input clk;
-    input [6:0] in0, in1, in2, in3, in4, in5, in6, in7;
-    output reg [6:0] out = 0;
-    output reg [7:0] outan = 0;
+    input [3:0] in0, in1, in2, in3, in4, in5, in6, in7;
+    output reg [6:0] out;
+    output reg [7:0] outan;
     
     // declare working registers
-    reg [3:0] anode = 0;
+    reg [3:0] anode;
     reg [17:0] counter = 0;
-    reg [6:0] decoded = 0;
+    reg [3:0] decoded;
     
     // generate clock for display refresh
     always@ (posedge clk) begin
@@ -33,37 +33,37 @@ module displayController(clk, in0, in1, in2, in3, in4, in5, in6, in7, out, outan
     always @* begin
         case (decoded)
             0: begin
-                outan = 7'b1000000;
+                out = 7'b1000000;
             end
             1: begin
-                outan = 7'b1111001;
+                out = 7'b1111001;
             end
             2: begin
-                outan = 7'b0100100;
+                out = 7'b0100100;
             end
             3: begin
-                outan = 7'b0110000;
+                out = 7'b0110000;
             end
             4: begin
-                outan = 7'b0011001;
+                out = 7'b0011001;
             end
             5: begin
-                outan = 7'b0010010;
+                out = 7'b0010010;
             end
             6: begin
-                outan = 7'b0000010;
+                out = 7'b0000010;
             end
             7: begin
-                outan = 7'b1111000;
+                out = 7'b1111000;
             end
             8: begin
-                outan = 7'b0000000;
+                out = 7'b0000000;
             end
             9: begin
-                outan = 7'b0011000;
+                out = 7'b0011000;
             end
             default: begin
-                outan = 7'b1111111;
+                out = 7'b1111111;
             end
         endcase
     end
