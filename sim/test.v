@@ -21,10 +21,10 @@
 
 
 module test();
-    reg clk, reset_n, ena, rw, ack_error;
+    reg clk, reset_n, ena, rw;
     reg [6:0] addr;
     reg [7:0] data_wr;
-    wire busy;
+    wire busy, ack_error;
     wire sda, scl;
     wire [6:0] cathode;
     wire [7:0] anode;
@@ -47,7 +47,7 @@ module test();
         reset_n = 0;    // reset
         #20
         reset_n = 1;    // no reset
-        #10
+        #2500
         ena = 1;        // latch command to read from address 0x20
         #20
         ena = 0;        // unlatch command

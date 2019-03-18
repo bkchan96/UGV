@@ -21,10 +21,10 @@
 
 
 module top(clk, reset_n, ena, addr, rw, data_wr, busy, ack_error, sda, scl, cathode, anode, dp);
-    input clk, reset_n, ena, rw, ack_error;
+    input clk, reset_n, ena, rw;
     input [6:0] addr;
     input [7:0] data_wr;
-    output busy;
+    output busy, ack_error;
     inout sda, scl;
     output [6:0] cathode;
     output [7:0] anode;
