@@ -32,6 +32,8 @@ module top(clk, reset_n, ena, addr, rw, data_wr, busy, ack_error, sda, scl, cath
     
     // declare intermediate signal
     wire [7:0] data_rd;
+    wire [7:0] decoded_gray;
+    wire [11:0] BCD;
     
     // instantiate i2c master controller
     i2c_master #(
@@ -50,17 +52,23 @@ module top(clk, reset_n, ena, addr, rw, data_wr, busy, ack_error, sda, scl, cath
         .sda(sda),              //serial data output of i2c bus
         .scl(scl));             //serial clocl output of i2c bus
     
+    // decode the gray code from the encoder
+    gray_decoder u_gray_decoder(.in(data_rd), .out(decoded_gray));
+    
+    // Convert binary to BCD
+    B2BCD u_B2BCD(.clk(clk), .B(decoded_gray), .BCD(BCD));
+    
     // instantiate 7 segment display for display data read from slave
     displayController u_displayController(
         .clk(clk),
-        .in0(data_rd[0]),
-        .in1(data_rd[1]),
-        .in2(data_rd[2]),
-        .in3(data_rd[3]),
-        .in4(data_rd[4]),
-        .in5(data_rd[5]),
-        .in6(data_rd[6]),
-        .in7(data_rd[7]),
+        .in0(BCD[3:0]),
+        .in1(BCD[7:4]),
+        .in2(BCD[11:8]),
+        .in3(4'b1111),
+        .in4(4'b1111),
+        .in5(4'b1111),
+        .in6(4'b1111),
+        .in7(4'b1111),
         .out(cathode),
         .outan(anode));
     

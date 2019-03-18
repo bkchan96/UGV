@@ -7,7 +7,7 @@ module displayController(clk, in0, in1, in2, in3, in4, in5, in6, in7, out, outan
     output reg [7:0] outan;
     
     // declare working registers
-    reg [3:0] anode;
+    reg [2:0] anode;
     reg [17:0] counter = 0;
     reg [3:0] decoded;
     
